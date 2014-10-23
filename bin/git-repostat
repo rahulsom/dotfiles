@@ -15,14 +15,12 @@ function localStatus() {
   AHEAD=$(git log --no-merges ${SYNC_BRANCH}..$1 --pretty=oneline | wc -l)
   printf "%-30s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 $AHEAD $BEHIND
 }
-export -f localStatus
 
 function remoteStatus() {
   BEHIND=$(git log --no-merges origin/$1..${SYNC_BRANCH} --pretty=oneline | wc -l)
   AHEAD=$(git log --no-merges ${SYNC_BRANCH}..origin/$1 --pretty=oneline | wc -l)
   printf "%-30s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 $AHEAD $BEHIND
 }
-export -f remoteStatus
 
 function dualStatus() {
   BEHIND_SYNC=$(git log --no-merges $1..${SYNC_BRANCH} --pretty=oneline | wc -l)
@@ -37,7 +35,6 @@ function dualStatus() {
   printf "%-30s ${TEXT_GREEN}%5d ${TEXT_RED}%5d %10s${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}      %s\n" \
       $1 $AHEAD_ORIGIN $BEHIND_ORIGIN "" $AHEAD_SYNC $BEHIND_SYNC "$COMMENT"
 }
-export -f dualStatus
 
 localBranches > /tmp/$$.local.tmp
 remoteBranches > /tmp/$$.remote.tmp
@@ -46,16 +43,16 @@ comm -13 /tmp/$$.local.tmp /tmp/$$.remote.tmp > /tmp/$$.remoteonly.tmp
 comm -23 /tmp/$$.local.tmp /tmp/$$.remote.tmp > /tmp/$$.localonly.tmp
 
 
-echo "${TEXT_RED}Local Only Branches${RESET_FORMATTING} vs ${SYNC_BRANCH}"
-cat /tmp/$$.localonly.tmp | xargs -n 1 -I {} bash -c 'localStatus "$@"' _ {}
+printf "${TEXT_RED}%-30s${RESET_FORMATTING} %s\n" "Local Only Branches" "vs ${SYNC_BRANCH}"
+cat /tmp/$$.localonly.tmp | while read -r i; do localStatus "$i"; done | sort -k 1 -n
 echo ""
 
-echo "${TEXT_RED}Remote Only Branches${RESET_FORMATTING} vs ${SYNC_BRANCH}"
-cat /tmp/$$.remoteonly.tmp | xargs -n 1 -I {} bash -c 'remoteStatus "$@"' _ {}
+printf "${TEXT_RED}%-30s${RESET_FORMATTING} %s\n" "Remote Only Branches" "vs ${SYNC_BRANCH}"
+cat /tmp/$$.remoteonly.tmp | while read -r i; do remoteStatus "$i"; done | sort -k 1 -n
 echo ""
 
-echo "${TEXT_GREEN}Synced Branches${RESET_FORMATTING} vs origin and ${SYNC_BRANCH}"
-cat /tmp/$$.both.tmp | xargs -n 1 -I {} bash -c 'dualStatus "$@"' _ {}
+printf "${TEXT_GREEN}%-30s${RESET_FORMATTING} %-20s %s\n" "Synced Branches" "vs origin" "and ${SYNC_BRANCH}"
+cat /tmp/$$.both.tmp | while read -r i; do dualStatus "$i"; done | sort -k 1 -n
 echo ""
 
 rm /tmp/$$.*.tmp
