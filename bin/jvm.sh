@@ -21,9 +21,9 @@ findJava() {
 
 if [ "$1" = "" ]; then
   echo "Choose from:" >&2
-  echo ""
+  echo "" >&2
   listJavaHomes | while read -r i; do toJava "$i"; done | sort -k 1 -n
-  echo ""
+  echo "" >&2
   echo "${BACKGROUND_BLUE}${TEXT_WHITE}!JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
 elif [ "$1" = "-u" ]; then
   echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
