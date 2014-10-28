@@ -86,5 +86,10 @@ alias jvm="source ~/bin/jvm.sh"
 alias chrome="open -a /Applications/Google\ Chrome.app"
 unalias git
 
+for file in ~/.{path,exports,aliases,functions,extra}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
+
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
 [[ -s "$HOME/.gvm/bin/gvm-init.sh" ]] && source "$HOME/.gvm/bin/gvm-init.sh"
