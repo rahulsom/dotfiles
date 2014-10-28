@@ -27,6 +27,7 @@ function dualStatus() {
   AHEAD_SYNC=$(git log --no-merges ${SYNC_BRANCH}..$1 --pretty=oneline | wc -l)
   BEHIND_ORIGIN=$(git log --no-merges $1..origin/$1 --pretty=oneline | wc -l)
   AHEAD_ORIGIN=$(git log --no-merges origin/$1..$1 --pretty=oneline | wc -l)
+  COMMENT=""
   if [ $AHEAD_SYNC = 0 ]; then
     if [ $1 != master ]; then
       COMMENT="git branch -D $1; git push origin :$1"
