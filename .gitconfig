@@ -16,6 +16,7 @@
 	frag = magenta bold # line info
 	old = red # deletions
 	new = green # additions
+	whitespace = "red reverse"
 
 [color "status"]
 
