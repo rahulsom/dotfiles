@@ -15,7 +15,7 @@ listJavaHomes() {
 }
 
 findJava() {
-  listJavaHomes | while read -r i; do toJava "$i"; done | grep $1 | tr -s " " | cut -d " " -f 3
+  listJavaHomes | while read -r i; do toJava "$i"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
 }
 
 
