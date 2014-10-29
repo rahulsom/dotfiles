@@ -24,13 +24,18 @@ validateJava() {
   fi
 }
 
-
 if [ "$1" = "" ]; then
-  echo "Choose from:" >&2
-  echo "" >&2
+  if [ $(basename $SHELL) = "zsh" ]; then
+    if [ $ZSH_SUBSHELL -gt 1 ]; then
+      HIDE_COMMENTS=1
+    fi
+  fi
+  test $HIDE_COMMENTS || echo "Choose from:" >&2
+  test $HIDE_COMMENTS || echo "" >&2
   listJavaHomes | while read -r i; do toJava "$i"; done | sort -k 1 -n
-  echo "" >&2
-  echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
+  test $HIDE_COMMENTS || echo "" >&2
+  test $HIDE_COMMENTS || echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
+  unset HIDE_COMMENTS
 elif [ "$1" = "-u" ]; then
   echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
   unset JAVA_HOME
