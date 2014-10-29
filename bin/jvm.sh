@@ -18,6 +18,12 @@ findJava() {
   listJavaHomes | while read -r i; do toJava "$i"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
 }
 
+validateJava() {
+  if [ "$JAVA_HOME" = "" ]; then
+    return 1
+  fi
+}
+
 
 if [ "$1" = "" ]; then
   echo "Choose from:" >&2
@@ -33,4 +39,5 @@ else
   echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
   export JAVA_HOME=$(findJava $1)
   echo "${BACKGROUND_GREEN}${TEXT_WHITE}+JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
+  validateJava
 fi
