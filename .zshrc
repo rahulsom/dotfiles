@@ -84,7 +84,7 @@ export GREP_COLOR='1;35;40'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias jvm="source ~/bin/jvm.sh"
 alias chrome="open -a /Applications/Google\ Chrome.app"
-unalias git
+alias git && unalias git
 
 for file in ~/.{path,exports,aliases,functions,extra}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
