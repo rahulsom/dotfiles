@@ -29,7 +29,7 @@ function dualStatus() {
   AHEAD_ORIGIN=$(git log --no-merges origin/$1..$1 --pretty=oneline | wc -l)
   COMMENT=""
   if [ $AHEAD_SYNC = 0 ]; then
-    if [ $1 != master ]; then
+    if [ $1 != master ] && [ $1 != develop ]; then
       COMMENT="git branch -D $1; git push origin :$1"
     fi
   fi
