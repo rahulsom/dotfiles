@@ -1,5 +1,16 @@
 #!/bin/sh
-SYNC_BRANCH=${CENTRAL_BRANCH:-upstream/master}
+if [ $(git remote | grep -c upstream) = 1 ]; then
+  UP_REMOTE=upstream
+else
+  UP_REMOTE=origin
+fi
+if [ $(git branch | grep -c develop) = 1 ]; then
+  UP_BRANCH=develop
+else
+  UP_BRANCH=master
+fi
+
+SYNC_BRANCH=${CENTRAL_BRANCH:-$UP_REMOTE/$UP_BRANCH}
 
 function localBranches() {
   git branch | sed -e s/\*//g | tr -s " " | cut -d " " -f 2 | sort
@@ -11,18 +22,21 @@ function remoteBranches() {
 }
 
 function localStatus() {
+  AGE=$(git show --pretty=format:"%cr" $1 | head -n 1)
   BEHIND=$(git log --no-merges $1..${SYNC_BRANCH} --pretty=oneline | wc -l)
   AHEAD=$(git log --no-merges ${SYNC_BRANCH}..$1 --pretty=oneline | wc -l)
-  printf "%-30s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 $AHEAD $BEHIND
+  printf "%-30s %15s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 "$AGE" $AHEAD $BEHIND
 }
 
 function remoteStatus() {
+  AGE=$(git show --pretty=format:"%cr" origin/$1 | head -n 1)
   BEHIND=$(git log --no-merges origin/$1..${SYNC_BRANCH} --pretty=oneline | wc -l)
   AHEAD=$(git log --no-merges ${SYNC_BRANCH}..origin/$1 --pretty=oneline | wc -l)
-  printf "%-30s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 $AHEAD $BEHIND
+  printf "%-30s %15s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 "$AGE" $AHEAD $BEHIND
 }
 
 function dualStatus() {
+  AGE=$(git show --pretty=format:"%cr" $1 | head -n 1)
   BEHIND_SYNC=$(git log --no-merges $1..${SYNC_BRANCH} --pretty=oneline | wc -l)
   AHEAD_SYNC=$(git log --no-merges ${SYNC_BRANCH}..$1 --pretty=oneline | wc -l)
   BEHIND_ORIGIN=$(git log --no-merges $1..origin/$1 --pretty=oneline | wc -l)
@@ -33,8 +47,8 @@ function dualStatus() {
       COMMENT="git branch -D $1; git push origin :$1"
     fi
   fi
-  printf "%-30s ${TEXT_GREEN}%5d ${TEXT_RED}%5d %10s${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}      %s\n" \
-      $1 $AHEAD_ORIGIN $BEHIND_ORIGIN "" $AHEAD_SYNC $BEHIND_SYNC "$COMMENT"
+  printf "%-30s %15s ${TEXT_GREEN}%5d ${TEXT_RED}%5d %10s${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}      %s\n" \
+      $1 "$AGE" $AHEAD_ORIGIN $BEHIND_ORIGIN "" $AHEAD_SYNC $BEHIND_SYNC "$COMMENT"
 }
 
 localBranches > /tmp/$$.local.tmp
@@ -44,15 +58,15 @@ comm -13 /tmp/$$.local.tmp /tmp/$$.remote.tmp > /tmp/$$.remoteonly.tmp
 comm -23 /tmp/$$.local.tmp /tmp/$$.remote.tmp > /tmp/$$.localonly.tmp
 
 
-printf "${TEXT_RED}%-30s${RESET_FORMATTING} %s\n" "Local Only Branches" "vs ${SYNC_BRANCH}"
+printf "${TEXT_RED}%-46s${RESET_FORMATTING} %s\n" "Local Only Branches" "vs ${SYNC_BRANCH}"
 cat /tmp/$$.localonly.tmp | while read -r i; do localStatus "$i"; done | sort -k 1 -n
 echo ""
 
-printf "${TEXT_RED}%-30s${RESET_FORMATTING} %s\n" "Remote Only Branches" "vs ${SYNC_BRANCH}"
+printf "${TEXT_RED}%-46s${RESET_FORMATTING} %s\n" "Remote Only Branches" "vs ${SYNC_BRANCH}"
 cat /tmp/$$.remoteonly.tmp | while read -r i; do remoteStatus "$i"; done | sort -k 1 -n
 echo ""
 
-printf "${TEXT_GREEN}%-30s${RESET_FORMATTING} %-20s %s\n" "Synced Branches" "vs origin" "and ${SYNC_BRANCH}"
+printf "${TEXT_GREEN}%-46s${RESET_FORMATTING} %-20s %s\n" "Synced Branches" "vs origin" "and ${SYNC_BRANCH}"
 cat /tmp/$$.both.tmp | while read -r i; do dualStatus "$i"; done | sort -k 1 -n
 echo ""
 
