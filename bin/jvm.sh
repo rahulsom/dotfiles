@@ -10,8 +10,8 @@ toJava() {
 }
 
 listJavaHomes() {
-  find /Library/Java -name "Home" -type d | grep -i java
-  find /System/Library/Java/JavaVirtualMachines -name "Home" -type d | grep -i java
+  find /Library/Java -name "Home" -type d 2>/dev/null| grep -i java
+  find /System/Library/Java/JavaVirtualMachines -name "Home" -type d 2>/dev/null| grep -i java
 }
 
 findJava() {
