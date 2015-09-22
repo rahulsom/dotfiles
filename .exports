@@ -26,9 +26,3 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 
 # Set a reasonable home for go libraries and tools
 export GOPATH=$HOME/go
-
-# Set a reasonable size for Grails and java apps
-export GRAILS_OPTS="-server -Xmx2048M -Xms2048M -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8"
-export   JAVA_OPTS="-server -Xmx2048M -Xms2048M -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8"
-
-
