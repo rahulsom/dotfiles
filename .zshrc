@@ -92,4 +92,8 @@ export GREP_OPTIONS="--color=auto"
 export GREP_COLOR='1;35;40'
 
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
