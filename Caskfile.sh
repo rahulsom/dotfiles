@@ -17,6 +17,7 @@ brew cask install firefoxdeveloperedition
 brew cask install intellij-idea
 brew cask install hipchat
 brew cask install slack
+brew cask install github-desktop
 
 # cask install google-chrome-canary 2> /dev/null
 # cask install imagealpha 2> /dev/null
