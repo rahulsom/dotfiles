@@ -97,6 +97,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 export PATH="$HOME/.goenv/bin:$PATH"
 if which goenv > /dev/null; then eval "$(goenv init -)"; fi
