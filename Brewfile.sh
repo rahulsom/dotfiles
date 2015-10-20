@@ -13,12 +13,11 @@ brew install git
 brew install imagemagick --with-webp
 brew install hub
 brew install wget
+brew install heroku-toolbelt
 
 brew install nodenv
-
 brew install rbenv
 brew install ruby-build
-
 brew install pyenv
 
 brew cleanup
