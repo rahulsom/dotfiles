@@ -13,6 +13,8 @@ brew install git
 brew install imagemagick --with-webp
 brew install hub
 brew install wget
+brew install tree
+
 brew install heroku-toolbelt
 
 brew install nodenv
