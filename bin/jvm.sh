@@ -15,7 +15,7 @@ listJavaHomes() {
 }
 
 findJava() {
-  listJavaHomes | while read -r i; do toJava "$i"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
+  listJavaHomes | while read -r JAVALINE; do toJava "$JAVALINE"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
 }
 
 validateJava() {
@@ -32,7 +32,7 @@ if [ "$1" = "" ]; then
   fi
   test $HIDE_COMMENTS || echo "Choose from:" >&2
   test $HIDE_COMMENTS || echo "" >&2
-  listJavaHomes | while read -r i; do toJava "$i"; done | sort -k 1 -n
+  listJavaHomes | while read -r JAVALINE; do toJava "$JAVALINE"; done | sort -k 1 -n
   test $HIDE_COMMENTS || echo "" >&2
   test $HIDE_COMMENTS || echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
   unset HIDE_COMMENTS
