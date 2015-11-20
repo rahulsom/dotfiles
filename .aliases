@@ -152,3 +152,5 @@ alias decktape='~/src/decktape/bin/phantomjs ~/src/decktape/decktape.js'
 
 # Report on wifi
 alias wifi='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s'
+
+alias ad='asciidoctor -r asciidoctor-diagram'
