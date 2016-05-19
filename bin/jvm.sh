@@ -18,10 +18,16 @@ installJava() {
   VER=$1
   JDKFILE="jdk-$VER-macosx-x64.dmg"
   echo "Downloading $JDKFILE..." >&2
-  curl --insecure --junk-session-cookies --location --remote-name --progress-bar --output "~/Downloads/$JDKFILE"  \
+
+  wget --insecure \
+       --junk-session-cookies \
+       --location \
+       --remote-name \
+       --progress-bar \
        --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-       "http://download.oracle.com/otn-pub/java/jdk/$VER-b14/$JDKFILE"
-  MOUNTDIR=$(echo `hdiutil mount ~/Downloads/"$JDKFILE" | tail -1 | awk '{$1=$2=""; print $0}'` | xargs -0 echo)
+       "http://download.oracle.com/otn-pub/java/jdk/$VER-b14/$JDKFILE" > "$HOME/Downloads/$JDKFILE"
+
+  MOUNTDIR=$(echo $(hdiutil mount ~/Downloads/"$JDKFILE" | tail -1 | awk '{$1=$2=""; print $0}') | xargs -0 echo)
   sudo installer -pkg "$MOUNTDIR/"*.pkg -target /
   hdiutil unmount "$MOUNTDIR"
 }
