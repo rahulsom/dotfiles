@@ -14,6 +14,18 @@ listJavaHomes() {
   find /System/Library/Java/JavaVirtualMachines -name "Home" -type d 2>/dev/null| grep -i java
 }
 
+installJava() {
+  VER=$1
+  JDKFILE="jdk-$VER-macosx-x64.dmg"
+  echo "Downloading $JDKFILE..." >&2
+  curl --insecure --junk-session-cookies --location --remote-name --progress-bar --output "~/Downloads/$JDKFILE"  \
+       --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+       "http://download.oracle.com/otn-pub/java/jdk/$VER-b14/$JDKFILE"
+  MOUNTDIR=$(echo `hdiutil mount ~/Downloads/"$JDKFILE" | tail -1 | awk '{$1=$2=""; print $0}'` | xargs -0 echo)
+  sudo installer -pkg "$MOUNTDIR/"*.pkg -target /
+  hdiutil unmount "$MOUNTDIR"
+}
+
 findJava() {
   listJavaHomes | while read -r JAVALINE; do toJava "$JAVALINE"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
 }
@@ -36,6 +48,8 @@ if [ "$1" = "" ]; then
   test $HIDE_COMMENTS || echo "" >&2
   test $HIDE_COMMENTS || echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
   unset HIDE_COMMENTS
+elif [ "$1" = "install" ]; then
+  [[ $2 =~ ^[5-9]u[0-9][0-9]$ ]] && installJava "$2" || echo "Please use right version format (e.g. 8u66)" >&2
 elif [ "$1" = "-u" ]; then
   echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
   unset JAVA_HOME
