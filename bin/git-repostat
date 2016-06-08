@@ -1,4 +1,7 @@
 #!/bin/sh
+TEXT_RED=`tput setaf 1`
+TEXT_GREEN=`tput setaf 2`
+RESET_FORMATTING=`tput sgr0`
 if [ $(git remote | grep -c upstream) = 1 ]; then
   UP_REMOTE=upstream
 else
