@@ -278,3 +278,12 @@ del_stopped(){
 		docker rm $name
 	fi
 }
+
+countdown(){
+  date1=$((`date +%s` + $1));
+  while [ "$date1" -ge `date +%s` ]; do
+    echo -n "  $(($date1 - `date +%s`)) seconds left      \r"
+    sleep 0.1
+  done
+  echo ""
+}
