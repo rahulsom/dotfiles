@@ -1,4 +1,13 @@
 #!/bin/bash
+java_update() {
+    TAGS="macos,jdk,x64,dmg"
+    curl "https://javaversionmanager.appspot.com/versions?tags=$TAGS" > ~/.jvm-cache
+}
+
+java_ls_all() {
+    cat ~/.jvm-cache | cut -d $'\t' -f 1 | column -x
+}
+
 toJava() {
   JDKDIR=$(basename $(dirname $(dirname $1)))
   JDKVER=$(echo $JDKDIR| sed -e "s/[A-Za-z]//g" | sed -e "s/^1.//g" | sed -e "s/\.$//g")
@@ -9,23 +18,23 @@ toJava() {
   printf "%10s   %s\n" "$JDKVER" "$1"
 }
 
-listJavaHomes() {
+java_ls() {
   find /Library/Java -name "Home" -type d 2>/dev/null| grep -i java
   find /System/Library/Java/JavaVirtualMachines -name "Home" -type d 2>/dev/null| grep -i java
 }
 
 installJava() {
   VER=$1
-  JDKFILE="jdk-$VER-macosx-x64.dmg"
-  echo "Downloading $JDKFILE..." >&2
+  if [ "$VER" = "" ]; then
 
-  wget --insecure \
-       --junk-session-cookies \
-       --location \
-       --remote-name \
-       --progress-bar \
-       --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-       "http://download.oracle.com/otn-pub/java/jdk/$VER-b14/$JDKFILE" > "$HOME/Downloads/$JDKFILE"
+  fi
+  URL=$(cat ~/.jvm-cache | grep ^$VER | cut -d $'\t' -f 4 | sed -e 's/otn/otn-pub/g')
+  echo "Will download from $URL"
+  JDKFILE=$(basename $URL)
+  echo "Will download to $HOME/Downloads/$JDKFILE"
+
+  curl --junk-session-cookies --progress-bar \
+        -L -b "oraclelicense=a" "$URL" -o "$HOME/Downloads/$JDKFILE"
 
   MOUNTDIR=$(echo $(hdiutil mount ~/Downloads/"$JDKFILE" | tail -1 | awk '{$1=$2=""; print $0}') | xargs -0 echo)
   sudo installer -pkg "$MOUNTDIR/"*.pkg -target /
@@ -42,27 +51,60 @@ validateJava() {
   fi
 }
 
-if [ "$1" = "" ]; then
-  if [ $(basename $SHELL) = "zsh" ]; then
-    if [ $ZSH_SUBSHELL -gt 1 ]; then
-      HIDE_COMMENTS=1
-    fi
-  fi
-  test $HIDE_COMMENTS || echo "Choose from:" >&2
-  test $HIDE_COMMENTS || echo "" >&2
-  listJavaHomes | while read -r JAVALINE; do toJava "$JAVALINE"; done | sort -k 1 -n
-  test $HIDE_COMMENTS || echo "" >&2
-  test $HIDE_COMMENTS || echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
-  unset HIDE_COMMENTS
-elif [ "$1" = "install" ]; then
-  [[ $2 =~ ^[5-9]u[0-9][0-9]$ ]] && installJava "$2" || echo "Please use right version format (e.g. 8u66)" >&2
-elif [ "$1" = "-u" ]; then
-  echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
-  unset JAVA_HOME
-  echo "${BACKGROUND_GREEN}${TEXT_WHITE}+JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
-else
-  echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
-  export JAVA_HOME=$(findJava $1)
-  echo "${BACKGROUND_GREEN}${TEXT_WHITE}+JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
-  validateJava
+help() {
+    echo "jvm"
+    echo "   h       - Help"
+    echo "   ls      - List installed versions"
+    echo "   ls -a   - List available versions"
+    echo "   update  - Update list of candidates"
+    echo "   u <ver> - Use version"
+    echo "   u       - Unset version"
+    echo "   i <ver> - Install version"
+}
+
+java_before() {
+    echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
+}
+java_after() {
+    echo "${BACKGROUND_GREEN}${TEXT_WHITE}+JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
+}
+java_unchanged() {
+    echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
+}
+
+COMMAND=$1
+if [ "$COMMAND" = "" ]; then
+    COMMAND=h
 fi
+case "$COMMAND" in
+    h)
+        help
+        java_unchanged
+        ;;
+    update)
+        java_update
+        java_ls
+        java_unchanged
+        ;;
+    ls)
+        if [ "$2" = "-a" ]; then
+            java_ls_all
+        else
+            java_ls | while read -r JAVALINE; do toJava "$JAVALINE"; done | sort -k 1 -n
+        fi
+        echo ""
+        java_unchanged
+        ;;
+    i)
+        installJava $2
+        ;;
+    u)
+        java_before
+        if [ "$2" = "" ]; then
+            unset JAVA_HOME
+        else
+            export JAVA_HOME=$(findJava $2)
+        fi
+        java_after
+        ;;
+esac
