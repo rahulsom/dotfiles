@@ -45,7 +45,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git github git-flow osx grails brew jira mvn gradle themes)
+plugins=(docker   git github git-flow   osx themes   grails mvn gradle   brew brew-cask cask   jira   httpie)
 
 source $ZSH/oh-my-zsh.sh
 [[ -s "/opt/boxen/env.sh" ]] && source /opt/boxen/env.sh
@@ -95,5 +95,8 @@ export GREP_COLOR='1;35;40'
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="$HOME/.goenv/bin:$PATH"
+if which goenv  > /dev/null; then eval "$(goenv init -)";  fi
+if which rbenv  > /dev/null; then eval "$(rbenv init -)";  fi
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+if which pyenv  > /dev/null; then eval "$(pyenv init -)";  fi

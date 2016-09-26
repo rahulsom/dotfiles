@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/sh 
+TEXT_RED=`tput setaf 1`
+TEXT_GREEN=`tput setaf 2`
+RESET_FORMATTING=`tput sgr0`
 if [ $(git remote | grep -c upstream) = 1 ]; then
   UP_REMOTE=upstream
 else
@@ -32,11 +35,17 @@ function remoteStatus() {
   AGE=$(git show --pretty=format:"%cr" origin/$1 | head -n 1)
   BEHIND=$(git log --no-merges origin/$1..${SYNC_BRANCH} --pretty=oneline | wc -l)
   AHEAD=$(git log --no-merges ${SYNC_BRANCH}..origin/$1 --pretty=oneline | wc -l)
-  printf "%-30s %15s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}\n" $1 "$AGE" $AHEAD $BEHIND
+  COMMENT=""
+  if [ $AHEAD = 0 ]; then
+    if [ $1 != master ] && [ $1 != develop ]; then
+      COMMENT="git push origin :$1"
+    fi
+  fi
+  printf "%-30s %15s ${TEXT_GREEN}%5d ${TEXT_RED}%5d${RESET_FORMATTING}      %s\n" $1 "$AGE" $AHEAD $BEHIND "$COMMENT"
 }
 
 function dualStatus() {
-  AGE=$(git show --pretty=format:"%cr" $1 | head -n 1)
+  AGE=$(git show --pretty=format:"%cr" $1 -- | head -n 1)
   BEHIND_SYNC=$(git log --no-merges $1..${SYNC_BRANCH} --pretty=oneline | wc -l)
   AHEAD_SYNC=$(git log --no-merges ${SYNC_BRANCH}..$1 --pretty=oneline | wc -l)
   BEHIND_ORIGIN=$(git log --no-merges $1..origin/$1 --pretty=oneline | wc -l)

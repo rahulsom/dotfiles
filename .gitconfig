@@ -41,7 +41,7 @@
 	# Set attributes on files. Used for general diff improvements.
 	attributesfile = ~/.gitattributes
 [credential]
-	helper = /opt/boxen/bin/boxen-git-credential
+	helper = /usr/local/bin/git-credential-osxkeychain
 [gh]
 	protocol = https
 [filter "media"]
@@ -208,3 +208,7 @@
 	# Use the Ruby WEBRick library when creating a `git instaweb`
 	# HTTP server.
 	httpd = webrick
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true

@@ -258,3 +258,32 @@ function gw() {
 function gwo() {
   JAVA_OPTS="-server -Xmx2048M -Xms2048M -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8" gw $@
 }
+
+function rmgrape() {
+  GRAPEDIR=~/.groovy/grapes/$1
+  M2DIR=~/.m2/repository/$(echo $1 | sed -e"s/\\./\//g")
+
+  rm -rf $GRAPEDIR $M2DIR
+}
+
+dcleanup(){
+	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+del_stopped(){
+	local name=$1
+	local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
+
+	if [[ "$state" == "false" ]]; then
+		docker rm $name
+	fi
+}
+
+countdown(){
+  date1=$((`date +%s` + $1));
+  while [ "$date1" -ge `date +%s` ]; do
+    echo -n "  $(($date1 - `date +%s`)) seconds left      \r"
+    sleep 0.1
+  done
+  echo ""
+}

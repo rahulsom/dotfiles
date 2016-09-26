@@ -13,11 +13,13 @@ brew cask install java
 brew cask install java6
 brew cask install java7
 brew cask install dockertoolbox
+brew cask install firefox
 brew cask install firefoxdeveloperedition
 brew cask install intellij-idea
 brew cask install hipchat
 brew cask install slack
 brew cask install github-desktop
+brew cask install lighttable
 
 # cask install google-chrome-canary 2> /dev/null
 # cask install imagealpha 2> /dev/null
