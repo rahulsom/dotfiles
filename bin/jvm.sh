@@ -1,10 +1,11 @@
 #!/bin/bash
-java_update() {
-    TAGS="macos,jdk,x64,dmg"
-    curl "https://javaversionmanager.appspot.com/versions?tags=$TAGS" > ~/.jvm-cache
+jvmUpdateCache() {
+    curl --junk-session-cookies --progress-bar \
+        -H 'Accept-Encoding: gzip,deflate' \
+        "https://javaversionmanager.appspot.com/versions?tags=$TAGS" > ~/.jvm-cache
 }
 
-java_ls_all() {
+jvmListAvailable() {
     cat ~/.jvm-cache | cut -d $'\t' -f 1 | column -x
 }
 
@@ -18,17 +19,17 @@ toJava() {
   printf "%10s   %s\n" "$JDKVER" "$1"
 }
 
-java_ls() {
-  find /Library/Java -name "Home" -type d 2>/dev/null| grep -i java
+macosListLocal() {
+  find /Library/Java                            -name "Home" -type d 2>/dev/null| grep -i java
   find /System/Library/Java/JavaVirtualMachines -name "Home" -type d 2>/dev/null| grep -i java
 }
 
-installJava() {
+macosInstallJava() {
   VER=$1
   if [ "$VER" = "" ]; then
 
   fi
-  URL=$(cat ~/.jvm-cache | grep ^$VER | cut -d $'\t' -f 4 | sed -e 's/otn/otn-pub/g')
+  URL=$(cat ~/.jvm-cache | grep ^$VER | cut -d $'\t' -f 4 | sed -e 's/otn/otn-pub/g' | sed -e 's/otn-pub-pub/otn-pub/g')
   echo "Will download from $URL"
   JDKFILE=$(basename $URL)
   echo "Will download to $HOME/Downloads/$JDKFILE"
@@ -42,13 +43,7 @@ installJava() {
 }
 
 findJava() {
-  listJavaHomes | while read -r JAVALINE; do toJava "$JAVALINE"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
-}
-
-validateJava() {
-  if [ "$JAVA_HOME" = "" ]; then
-    return 1
-  fi
+  macosListLocal | while read -r JAVALINE; do toJava "$JAVALINE"; done | grep $1 | head -1 | tr -s " " | cut -d " " -f 3
 }
 
 help() {
@@ -60,17 +55,20 @@ help() {
     echo "   u <ver> - Use version"
     echo "   u       - Unset version"
     echo "   i <ver> - Install version"
+    echo ""
 }
 
-java_before() {
+jvmBefore() {
     echo "${BACKGROUND_RED}${TEXT_WHITE}-JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
 }
-java_after() {
+jvmAfter() {
     echo "${BACKGROUND_GREEN}${TEXT_WHITE}+JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
 }
-java_unchanged() {
+jvmUnchanged() {
     echo "${BACKGROUND_BLUE}${TEXT_WHITE}JAVA_HOME=${JAVA_HOME}${RESET_FORMATTING}" >&2
 }
+
+TAGS="macos,jdk,x64,dmg"
 
 COMMAND=$1
 if [ "$COMMAND" = "" ]; then
@@ -79,32 +77,39 @@ fi
 case "$COMMAND" in
     h)
         help
-        java_unchanged
+        jvmUnchanged
         ;;
     update)
-        java_update
-        java_ls
-        java_unchanged
+        jvmUpdateCache
+        echo ""
+        jvmListAvailable
+        echo ""
+        jvmUnchanged
         ;;
     ls)
         if [ "$2" = "-a" ]; then
-            java_ls_all
+            jvmListAvailable
         else
-            java_ls | while read -r JAVALINE; do toJava "$JAVALINE"; done | sort -k 1 -n
+            macosListLocal | while read -r JAVALINE; do toJava "$JAVALINE"; done | sort -k 1 -n
         fi
         echo ""
-        java_unchanged
+        jvmUnchanged
         ;;
     i)
-        installJava $2
+        macosInstallJava $2
         ;;
     u)
-        java_before
+        jvmBefore
         if [ "$2" = "" ]; then
             unset JAVA_HOME
         else
             export JAVA_HOME=$(findJava $2)
         fi
-        java_after
+        jvmAfter
+        ;;
+    *)
+        echo "Unknown command '$COMMAND'"
+        help
+        jvmUnchanged
         ;;
 esac
