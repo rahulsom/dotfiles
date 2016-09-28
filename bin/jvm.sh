@@ -2,7 +2,7 @@
 jvmUpdateCache() {
     curl --junk-session-cookies --progress-bar \
         -H 'Accept-Encoding: gzip,deflate' \
-        "https://javaversionmanager.appspot.com/versions?tags=$TAGS" > ~/.jvm-cache
+        "https://javaversionmanager.appspot.com/builds?tags=$TAGS" > ~/.jvm-cache
 }
 
 jvmListAvailable() {
