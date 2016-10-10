@@ -12,7 +12,7 @@ brew cask install vagrant
 brew cask install java
 brew cask install java6
 brew cask install java7
-brew cask install dockertoolbox
+brew cask install docker
 brew cask install firefox
 brew cask install firefoxdeveloperedition
 brew cask install intellij-idea
