@@ -277,3 +277,19 @@ countdown(){
   done
   echo ""
 }
+
+cadvisor(){
+	docker run -d \
+		--restart always \
+		-v /:/rootfs:ro \
+		-v /var/run:/var/run:rw \
+		-v /sys:/sys:ro  \
+		-v /var/lib/docker/:/var/lib/docker:ro \
+		-p 1234:8080 \
+		--name cadvisor \
+		google/cadvisor
+
+	# sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" cadvisor)
+	# browser-exec "http://cadvisor:8080"
+	open http://localhost:1234/
+}
