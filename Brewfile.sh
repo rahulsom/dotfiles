@@ -23,4 +23,6 @@ brew install rbenv
 brew install ruby-build
 brew install pyenv
 
+brew install hostess
+
 brew cleanup
