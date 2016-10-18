@@ -293,3 +293,19 @@ cadvisor(){
 	# browser-exec "http://cadvisor:8080"
 	open http://localhost:1234/
 }
+
+function orly() {
+  ANIMAL=$(echo $RANDOM % 40 + 1 | bc)
+  COLOR=$(echo $RANDOM % 17 | bc)
+  FILE=$(echo $ANIMAL-$COLOR-$1-$2-$3 | md5)
+  http GET http://orly-appstore.herokuapp.com/generate \
+      title=="$1" \
+      top_text=="$2" \
+      author=="$3" \
+      image_code==$ANIMAL \
+      theme==$COLOR \
+      guide_text=='The definitive guide' \
+      guide_text_placement=='bottom_right' \
+      Referer:'http://dev.to/rly' > $FILE.png
+  echo "$FILE.png"
+}
