@@ -309,3 +309,10 @@ function orly() {
       Referer:'http://dev.to/rly' > $FILE.png
   echo "$FILE.png"
 }
+
+function sedDropUntil() {
+  sed -n "/$1/,\$p" $2
+}
+function sedTakeBefore() {
+  sed -n "/^$1/q;p" $2
+}
