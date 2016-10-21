@@ -13,9 +13,11 @@ function doIt() {
 		--exclude "LICENSE-MIT.txt" \
 		--exclude ".gitconfig-user" \
 		-avh --no-perms . ~;
+
 	if [ ! -e ~/.gitconfig-user ]; then
 		cp .gitconfig-user ~
 	fi
+	
 	source ~/.bash_profile;
 }
 
