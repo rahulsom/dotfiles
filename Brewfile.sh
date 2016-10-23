@@ -9,12 +9,17 @@ brew update
 brew upgrade
 
 brew install ack
+brew install asciinema
 brew install git
-brew install imagemagick --with-webp
-brew install hub
-brew install wget
-brew install tree
+brew install gnupg
+brew install gnupg2
+brew install hostess
 brew install httpie
+brew install httpstat
+brew install hub
+brew install imagemagick --with-webp
+brew install tree
+brew install wget
 
 brew install heroku-toolbelt
 
@@ -23,6 +28,5 @@ brew install rbenv
 brew install ruby-build
 brew install pyenv
 
-brew install hostess
 
 brew cleanup
