@@ -20,6 +20,7 @@ brew install hub
 brew install imagemagick --with-webp
 brew install tree
 brew install wget
+brew install mas
 
 brew install heroku-toolbelt
 
