@@ -2,6 +2,7 @@
 # Usage: `brew bundle Caskfile`
 
 brew install caskroom/cask/brew-cask
+brew tap caskroom/fonts
 brew tap caskroom/versions
 
 # brew cask install dropbox 2> /dev/null
@@ -20,3 +21,5 @@ brew cask install hipchat
 brew cask install slack
 brew cask install github-desktop
 brew cask install lighttable
+
+brew cask install font-fira-code
