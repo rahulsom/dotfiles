@@ -256,19 +256,6 @@ function rmgrape() {
   rm -rf $GRAPEDIR $M2DIR
 }
 
-dcleanup(){
-	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
-	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
-}
-del_stopped(){
-	local name=$1
-	local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
-
-	if [[ "$state" == "false" ]]; then
-		docker rm $name
-	fi
-}
-
 countdown(){
   date1=$((`date +%s` + $1));
   while [ "$date1" -ge `date +%s` ]; do
@@ -276,22 +263,6 @@ countdown(){
     sleep 0.1
   done
   echo ""
-}
-
-cadvisor(){
-	docker run -d \
-		--restart always \
-		-v /:/rootfs:ro \
-		-v /var/run:/var/run:rw \
-		-v /sys:/sys:ro  \
-		-v /var/lib/docker/:/var/lib/docker:ro \
-		-p 1234:8080 \
-		--name cadvisor \
-		google/cadvisor
-
-	# sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" cadvisor)
-	# browser-exec "http://cadvisor:8080"
-	open http://localhost:1234/
 }
 
 function orly() {

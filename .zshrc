@@ -80,7 +80,7 @@ alias jvm="source ~/bin/jvm.sh"
 alias chrome="open -a /Applications/Google\ Chrome.app"
 alias git >/dev/null && unalias git
 
-for file in ~/.{path,exports,aliases,functions,extra}; do
+for file in ~/.{path,exports,aliases,functions,extra,docker}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;

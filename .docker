@@ -1,0 +1,34 @@
+dcleanup(){
+	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+del_stopped(){
+	local name=$1
+	local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
+
+	if [[ "$state" == "false" ]]; then
+		docker rm $name
+	fi
+}
+
+cadvisor(){
+	docker run -d \
+		--restart always \
+		-v /:/rootfs:ro \
+		-v /var/run:/var/run:rw \
+		-v /sys:/sys:ro  \
+		-v /var/lib/docker/:/var/lib/docker:ro \
+		-p 1234:8080 \
+		--name cadvisor \
+		google/cadvisor
+
+	# sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" cadvisor)
+	# browser-exec "http://cadvisor:8080"
+	open http://localhost:1234/
+}
+
+alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
+alias tflow='docker run -v $(pwd):/local -it gcr.io/tensorflow/tensorflow:latest-devel'
+alias tika='docker run --rm -v $(pwd):/local -it rahulsom/tika'
+alias che='docker run --rm -t -v /var/run/docker.sock:/var/run/docker.sock eclipse/che start'
+alias dockerup='docker images --filter "dangling=false" --format "{{.Repository}}:{{.Tag}}" | xargs -L1 docker pull'
