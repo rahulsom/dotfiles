@@ -11,7 +11,6 @@ del_stopped(){
 		docker rm $name
 	fi
 }
-alias dockerup='docker images --filter "dangling=false" --format "{{.Repository}}:{{.Tag}}" | xargs -L1 docker pull'
 
 # Useful containers
 cadvisor(){
@@ -25,10 +24,9 @@ cadvisor(){
 		--name cadvisor \
 		google/cadvisor
 
-	# sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" cadvisor)
-	# browser-exec "http://cadvisor:8080"
 	open http://localhost:1234/
 }
+alias watchtower='docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock centurylink/watchtower'
 
 # Machine Learning
 alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
