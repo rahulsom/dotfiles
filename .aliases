@@ -172,3 +172,5 @@ alias gig='groovy -Dgroovy.grape.report.downloads=true -Divy.message.logger.leve
 alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
 alias tflow='docker run -v $(pwd):/local -it gcr.io/tensorflow/tensorflow:latest-devel'
 alias tika='docker run --rm -v $(pwd):/local -it rahulsom/tika'
+alias che='docker run --rm -t -v /var/run/docker.sock:/var/run/docker.sock eclipse/che start'
+alias dockerup='docker images --filter "dangling=false" --format "{{.Repository}}:{{.Tag}}" | xargs -L1 docker pull'
