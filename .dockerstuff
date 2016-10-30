@@ -1,3 +1,5 @@
+# Top level commands
+
 dcleanup(){
 	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
 	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
@@ -10,6 +12,8 @@ del_stopped(){
 		docker rm $name
 	fi
 }
+alias dockerup='docker images --filter "dangling=false" --format "{{.Repository}}:{{.Tag}}" | xargs -L1 docker pull'
+
 
 cadvisor(){
 	docker run -d \
@@ -28,7 +32,8 @@ cadvisor(){
 }
 
 alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
-alias tflow='docker run -v $(pwd):/local -it gcr.io/tensorflow/tensorflow:latest-devel'
+alias tflow='docker run --rm -v $(pwd):/local -it gcr.io/tensorflow/tensorflow:latest-devel'
 alias tika='docker run --rm -v $(pwd):/local -it rahulsom/tika'
 alias che='docker run --rm -t -v /var/run/docker.sock:/var/run/docker.sock eclipse/che start'
-alias dockerup='docker images --filter "dangling=false" --format "{{.Repository}}:{{.Tag}}" | xargs -L1 docker pull'
+
+alias postgres='docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres'
