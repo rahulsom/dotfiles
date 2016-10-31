@@ -39,10 +39,23 @@ alias tika='docker run --rm -v $(pwd):/local -it rahulsom/tika'
 alias che='docker run --rm -t -v /var/run/docker.sock:/var/run/docker.sock eclipse/che start'
 
 ## Databases
-alias postgres='docker run --rm --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres'
-alias pgsql='docker run -it --rm -e PGPASSWORD=mysecretpassword --link postgres:postgres postgres psql -h postgres -U postgres'
+alias postgres='docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres'
+alias pgsql='docker run --rm -it -e PGPASSWORD=mysecretpassword --link postgres:postgres postgres psql -h postgres -U postgres'
 
-alias mysqld='docker run --rm --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql'
+alias mysqld='docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql'
 function mysql() {
     docker run --rm -it --link mysql:mysql mysql sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+}
+
+alias redis='docker run --name redis -d -p 6379:6379 redis'
+alias redis-cli='docker run -it --link redis:redis --rm redis redis-cli -h redis -p 6379'
+
+alias cassandra='docker run --name cassandra -d -p 9042:9042 cassandra'
+function cqlsh() {
+    docker run -it --link cassandra:cassandra --rm cassandra sh -c 'exec cqlsh "$CASSANDRA_PORT_9042_TCP_ADDR"'
+}
+
+alias mongod='docker run --name mongo -d mongo'
+function mongo() {
+    docker run -it --link mongo:mongo --rm mongo sh -c 'exec mongo "$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/test"'
 }
