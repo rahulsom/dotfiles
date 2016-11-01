@@ -59,3 +59,6 @@ alias mongod='docker run --name mongo -d mongo'
 function mongo() {
     docker run -it --link mongo:mongo --rm mongo sh -c 'exec mongo "$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/test"'
 }
+
+## Other Utils
+alias pcat='docker run -v $(pwd):/local rahulsom/pcat'
