@@ -61,4 +61,12 @@ function mongo() {
 }
 
 ## Other Utils
+# xq launches xquartz in a way you can tunnel docker applications into it for X11 usage
+alias xq='socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
+
+# pcat uses pygmentize to cat a file
 alias pcat='docker run --rm -v $(pwd):/local rahulsom/pcat'
+
+alias dfirefox='docker run --rm -e DISPLAY=${IP}:0 jess/firefox'
+alias tor='docker run --rm -e DISPLAY=${IP}:0 paulczar/torbrowser'
+alias dchrome='docker run --rm -it -e DISPLAY=${IP}:0 jess/chrome --user-data-dir=/data --no-sandbox'
