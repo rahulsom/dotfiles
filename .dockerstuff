@@ -61,4 +61,4 @@ function mongo() {
 }
 
 ## Other Utils
-alias pcat='docker run -v $(pwd):/local rahulsom/pcat'
+alias pcat='docker run --rm -v $(pwd):/local rahulsom/pcat'
