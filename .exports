@@ -37,3 +37,6 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 
 # Set a reasonable home for go libraries and tools
 export GOPATH=$HOME/go
+
+# Capture the IP address for local connections
+export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')

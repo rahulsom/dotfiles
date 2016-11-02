@@ -21,5 +21,6 @@ brew cask install hipchat
 brew cask install slack
 brew cask install github-desktop
 brew cask install lighttable
+brew cask install xquartz
 
 brew cask install font-fira-code

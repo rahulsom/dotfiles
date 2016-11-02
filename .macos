@@ -923,3 +923,10 @@ for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
 	killall "${app}" &> /dev/null
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
+
+###############################################################################
+# XQuartz.app                                                                 #
+###############################################################################
+
+# Allow local connections for docker GUIs to work
+defaults write org.macosforge.xquartz.X11 nolisten_tcp -boolean false

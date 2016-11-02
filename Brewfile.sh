@@ -10,6 +10,7 @@ brew upgrade
 
 brew install ack
 brew install asciinema
+brew install socat
 brew install git
 brew install gnupg
 brew install gnupg2
