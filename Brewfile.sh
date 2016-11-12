@@ -14,7 +14,6 @@ brew install socat
 brew install git
 brew install gnupg
 brew install gnupg2
-brew install hostess
 brew install httpie
 brew install httpstat
 brew install hub
