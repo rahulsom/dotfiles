@@ -75,8 +75,9 @@ alias careercup='docker run --rm -v $(pwd):/local rahulsom/careercup'
 
 ## Browsers
 alias dfirefox='docker run --rm -e DISPLAY=${IP}:0 jess/firefox'
-alias tor='docker run --rm -e DISPLAY=${IP}:0 paulczar/torbrowser'
+alias torbrowser='docker run --rm -e DISPLAY=${IP}:0 paulczar/torbrowser'
 alias dchrome='docker run --rm -it -e DISPLAY=${IP}:0 jess/chrome --user-data-dir=/data --no-sandbox'
+alias lynx='docker run --rm -it jess/lynx'
 
 ## Other apps
 alias jenkins='docker run --rm -p 8080:8080 -p 50000:50000 -v $(pwd):/var/jenkins_home jenkins'
