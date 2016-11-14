@@ -287,3 +287,33 @@ function sedDropUntil() {
 function sedTakeBefore() {
   sed -n "/^$1/q;p" $2
 }
+
+function installCorpCertInJKS() {
+  if [ "$CORP_CERT_ALIAS" != "" ]; then
+    if [ "$CORP_CERT" != "" ]; then
+      CERTS_FILE=${JAVA_HOME}/jre/lib/security/cacerts
+      echo "CERTS_FILE = $CERTS_FILE"
+      curl -s $CORP_CERT > /tmp/corpcert.crt
+      if [ -f ${CERTS_FILE} ]; then
+        echo "Found cacerts file"
+        if [ -f ${CERTS_FILE}.orig ]; then
+          echo "Backing up exists"
+        else
+          echo "Backing up file"
+          sudo cp $CERTS_FILE ${CERTS_FILE}.orig
+        fi
+        sudo $JAVA_HOME/bin/keytool -import -trustcacerts \
+            -alias $CORP_CERT_ALIAS \
+            -storepass changeit \
+            -file /tmp/corpcert.crt \
+            -keystore $CERTS_FILE
+      else
+        echo "Could not find cacerts at $CERTS_FILE"
+      fi
+    else
+      echo "Please define CORP_CERT"
+    fi
+  else
+    echo "Please define CORP_CERT_ALIAS"
+  fi
+}
