@@ -1,10 +1,10 @@
 # Top level commands
-dcleanup(){
+dcleanup() {
 	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
 	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
 
-del_stopped(){
+del_stopped() {
 	local name=$1
     if [ "$name" = "" ]; then
         docker ps -a | grep Exited | cut -f1 -d " " | xargs docker rm
@@ -17,7 +17,7 @@ del_stopped(){
 }
 
 # Useful containers
-cadvisor(){
+cadvisor() {
 	docker run -d \
 		--restart always \
 		-v /:/rootfs:ro \
