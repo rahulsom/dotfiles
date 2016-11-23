@@ -77,7 +77,7 @@ alias xq='socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
 alias pcat='docker run --rm -v $(pwd):/local rahulsom/pcat'
 alias irssi='docker run -it --rm -e TERM -u $(id -u):$(id -g) --log-driver=none -v $HOME/.irssi:/home/user/.irssi:ro irssi:alpine'
 alias careercup='docker run --rm -v $(pwd):/local rahulsom/careercup'
-hostess() { docker run -it --rm -v /etc/hosts:/etc/hosts ondrejmo/hostess "$@" }
+hostess() { docker run -it --rm -v /private/etc/hosts:/etc/hosts ondrejmo/hostess "$@" }
 how2() { docker run -it --rm ondrejmo/how2 "$@" }
 udict() { docker run -it --rm ondrejmo/udict "$@" }
 
