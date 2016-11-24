@@ -236,84 +236,92 @@ function tre() {
 }
 
 function gw() {
-  if [ -f ./grailsw ]; then
-    ./grailsw $@
-  elif [ -f ./gradlew ]; then
-    ./gradlew $@
-  else
-    echo "Wrong directory to run gw!"
-  fi
+    if [ -f ./grailsw ]; then
+        ./grailsw $@
+    elif [ -f ./gradlew ]; then
+        ./gradlew $@
+    else
+        echo "Wrong directory to run gw!"
+    fi
 }
 
 function gwo() {
-  JAVA_OPTS="-server -Xmx2048M -Xms2048M -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8" gw $@
+    JAVA_OPTS="-server -Xmx2048M -Xms2048M -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8" gw $@
 }
 
 function rmgrape() {
-  GRAPEDIR=~/.groovy/grapes/$1
-  M2DIR=~/.m2/repository/$(echo $1 | sed -e"s/\\./\//g")
+    GRAPEDIR=~/.groovy/grapes/$1
+    M2DIR=~/.m2/repository/$(echo $1 | sed -e"s/\\./\//g")
 
-  rm -rf $GRAPEDIR $M2DIR
+    rm -rf $GRAPEDIR $M2DIR
 }
 
 countdown(){
-  date1=$((`date +%s` + $1));
-  while [ "$date1" -ge `date +%s` ]; do
-    echo -n "  $(($date1 - `date +%s`)) seconds left      \r"
-    sleep 0.1
-  done
-  echo ""
+    date1=$((`date +%s` + $1));
+    while [ "$date1" -ge `date +%s` ]; do
+        echo -n "  $(($date1 - `date +%s`)) seconds left      \r"
+        sleep 0.1
+    done
+    echo ""
 }
 
 function orly() {
-  ANIMAL=$(( ( RANDOM % 40 )  + 1 ))
-  COLOR=$(( ( RANDOM % 17 )  + 0 ))
-  FILE=$(echo $ANIMAL-$COLOR-$1-$2-$3 | md5)
-  http GET http://orly-appstore.herokuapp.com/generate \
-      title=="$1" \
-      top_text=="$2" \
-      author=="$3" \
-      image_code==$ANIMAL \
-      theme==$COLOR \
-      guide_text=='The definitive guide' \
-      guide_text_placement=='bottom_right' \
-      Referer:'http://dev.to/rly' > $FILE.png
-  echo "$FILE.png"
+    ANIMAL=$(( ( RANDOM % 40 )  + 1 ))
+    COLOR=$(( ( RANDOM % 17 )  + 0 ))
+    FILE=$(echo $ANIMAL-$COLOR-$1-$2-$3 | md5)
+    if [ "$1" = "" ]; then
+        echo "Need a title"
+    elif [ "$2" = "" ]; then
+        echo "Need a top text"
+    elif [ "$3" = "" ]; then
+        echo "Need an author"
+    else
+        http GET http://orly-appstore.herokuapp.com/generate \
+                title=="$1" \
+                top_text=="$2" \
+                author=="$3" \
+                image_code==$ANIMAL \
+                theme==$COLOR \
+                guide_text=='The definitive guide' \
+                guide_text_placement=='bottom_right' \
+                Referer:'http://dev.to/rly' > $FILE.png
+        echo "$FILE.png"
+    fi
 }
 
 function sedDropUntil() {
-  sed -n "/$1/,\$p" $2
+    sed -n "/$1/,\$p" $2
 }
 function sedTakeBefore() {
-  sed -n "/^$1/q;p" $2
+    sed -n "/^$1/q;p" $2
 }
 
 function installCorpCertInJKS() {
-  if [ "$CORP_CERT_ALIAS" != "" ]; then
-    if [ "$CORP_CERT" != "" ]; then
-      CERTS_FILE=${JAVA_HOME}/jre/lib/security/cacerts
-      echo "CERTS_FILE = $CERTS_FILE"
-      curl -s $CORP_CERT > /tmp/corpcert.crt
-      if [ -f ${CERTS_FILE} ]; then
-        echo "Found cacerts file"
-        if [ -f ${CERTS_FILE}.orig ]; then
-          echo "Backing up exists"
+    if [ "$CORP_CERT_ALIAS" != "" ]; then
+        if [ "$CORP_CERT" != "" ]; then
+            CERTS_FILE=${JAVA_HOME}/jre/lib/security/cacerts
+            echo "CERTS_FILE = $CERTS_FILE"
+            curl -s $CORP_CERT > /tmp/corpcert.crt
+            if [ -f ${CERTS_FILE} ]; then
+                echo "Found cacerts file"
+                if [ -f ${CERTS_FILE}.orig ]; then
+                    echo "Backing up exists"
+                else
+                    echo "Backing up file"
+                    sudo cp $CERTS_FILE ${CERTS_FILE}.orig
+                fi
+                sudo $JAVA_HOME/bin/keytool -import -trustcacerts \
+                        -alias $CORP_CERT_ALIAS \
+                        -storepass changeit \
+                        -file /tmp/corpcert.crt \
+                        -keystore $CERTS_FILE
+            else
+                echo "Could not find cacerts at $CERTS_FILE"
+            fi
         else
-          echo "Backing up file"
-          sudo cp $CERTS_FILE ${CERTS_FILE}.orig
+            echo "Please define CORP_CERT"
         fi
-        sudo $JAVA_HOME/bin/keytool -import -trustcacerts \
-            -alias $CORP_CERT_ALIAS \
-            -storepass changeit \
-            -file /tmp/corpcert.crt \
-            -keystore $CERTS_FILE
-      else
-        echo "Could not find cacerts at $CERTS_FILE"
-      fi
     else
-      echo "Please define CORP_CERT"
+        echo "Please define CORP_CERT_ALIAS"
     fi
-  else
-    echo "Please define CORP_CERT_ALIAS"
-  fi
 }
