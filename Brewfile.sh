@@ -12,6 +12,7 @@ brew install ack
 brew install asciinema
 brew install socat
 brew install git
+brew install git-lfs
 brew install gnupg
 brew install gnupg2
 brew install httpie
