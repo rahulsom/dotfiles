@@ -22,6 +22,7 @@ brew install imagemagick --with-webp
 brew install tree
 brew install wget
 brew install mas
+brew install watch
 
 brew install heroku-toolbelt
 
