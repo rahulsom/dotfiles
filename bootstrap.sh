@@ -9,6 +9,9 @@ function doIt() {
 		--exclude ".DS_Store" \
 		--exclude ".osx" \
 		--exclude "bootstrap.sh" \
+        --exclude "Gemfile.sh" \
+        --exclude "Brewfile.sh" \
+        --exclude "Caskfile.sh" \
 		--exclude "README.md" \
 		--exclude "LICENSE-MIT.txt" \
 		--exclude ".gitconfig-user" \
@@ -17,7 +20,7 @@ function doIt() {
 	if [ ! -e ~/.gitconfig-user ]; then
 		cp .gitconfig-user ~
 	fi
-	
+
 	source ~/.bash_profile;
 }
 
