@@ -310,7 +310,7 @@ function installCorpCertInJKS() {
                     echo "Backing up file"
                     sudo cp "$CERTS_FILE" "${CERTS_FILE}.orig"
                 fi
-                sudo "$JAVA_HOME/bin/keytool" -import -trustcacerts \
+                sudo keytool -import -trustcacerts \
                         -alias "$CORP_CERT_ALIAS" \
                         -storepass changeit \
                         -file /tmp/corpcert.crt \
