@@ -96,7 +96,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 export PATH="$HOME/.goenv/bin:$PATH"
-if which goenv  > /dev/null; then eval "$(goenv init -)";  fi
 if which rbenv  > /dev/null; then eval "$(rbenv init -)";  fi
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
 if which pyenv  > /dev/null; then eval "$(pyenv init -)";  fi
