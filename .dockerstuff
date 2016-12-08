@@ -97,3 +97,7 @@ alias zookeeper='docker run --name some-zookeeper --restart always -d -p 2181:21
 
 ## Compilers
 alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.17'
+
+## OSes
+alias ubuntu='docker run --rm -it -v $(pwd):/local ubuntu:16.04 bash'
+alias centos='docker run --rm -it -v $(pwd):/local centos:7 bash'
