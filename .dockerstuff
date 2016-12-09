@@ -100,9 +100,9 @@ alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $U
 
 function letsencrypt() {
     docker run -it --rm \
-    -v $(pwd):/etc/letsencrypt \
-    -p 80:80 -p 443:443 \
-    xataz/letsencrypt $@
+        -v $(pwd):/etc/letsencrypt \
+        -p 80:80 -p 443:443 \
+        xataz/letsencrypt $@
 }
 
 ## OSes
