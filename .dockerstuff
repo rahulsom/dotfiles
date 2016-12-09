@@ -106,5 +106,5 @@ function letsencrypt() {
 }
 
 ## OSes
-alias ubuntu='docker run --rm -it -v $(pwd):/local ubuntu:16.04 bash'
-alias centos='docker run --rm -it -v $(pwd):/local centos:7 bash'
+alias ubuntu='docker run --rm -it --hostname ubuntu -v $(pwd):/local ubuntu bash'
+alias centos='docker run --rm -it --hostname centos -v $(pwd):/local centos bash'
