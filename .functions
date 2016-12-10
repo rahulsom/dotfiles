@@ -289,6 +289,7 @@ function orly() {
     fi
 }
 
+# DropUntil and TakeBefore for text files.
 function sedDropUntil() {
     sed -n "/$1/,\$p" $2
 }
@@ -296,6 +297,7 @@ function sedTakeBefore() {
     sed -n "/^$1/q;p" $2
 }
 
+# Sometimes you need corporate certs in your default JKS
 function installCorpCertInJKS() {
     if [ "$CORP_CERT_ALIAS" != "" ]; then
         if [ "$CORP_CERT" != "" ]; then
@@ -324,4 +326,13 @@ function installCorpCertInJKS() {
     else
         echo "Please define CORP_CERT_ALIAS"
     fi
+}
+
+# Restart audio daemon when there's no sound in MacOS
+function restart_audio() {
+    command sudo killall coreaudiod && \
+    sudo launchctl unload /System/Library/LaunchDaemons/com.apple.audio.coreaudiod.plist && \
+    sudo launchctl   load /System/Library/LaunchDaemons/com.apple.audio.coreaudiod.plist || \
+    return
+    echo 'Audio daemon restarted'
 }
