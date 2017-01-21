@@ -30,7 +30,7 @@ cadvisor() {
 
 	open http://localhost:1234/
 }
-alias watchtower='docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock centurylink/watchtower'
+alias watchtower='docker run -d --restart always --name watchtower -v /var/run/docker.sock:/var/run/docker.sock centurylink/watchtower'
 
 # Machine Learning
 alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
