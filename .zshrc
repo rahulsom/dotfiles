@@ -45,7 +45,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(docker   git github git-flow   osx themes   grails mvn gradle   brew brew-cask   jira   httpie)
+plugins=(docker   git github git-flow   osx themes   grails mvn gradle   brew brew-cask   jira   httpie kubectl)
 
 source $ZSH/oh-my-zsh.sh
 [[ -s "/opt/boxen/env.sh" ]] && source /opt/boxen/env.sh
