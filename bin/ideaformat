@@ -1,0 +1,9 @@
+#!/bin/bash
+
+"/Applications/IntelliJ IDEA.app/Contents/bin/format.sh" \
+    -m $(for fname in $(find . -type f -name "*.*")
+    do
+      echo ${fname##*.}
+    done | sort | uniq | grep -vE "bin|class|dependencies|gitignore|iml|info|jar|lock|mainClass|original|sample|war" | xargs -I {} echo "*.{}" | tr '\n' ',' | sed -e "s/,$//g") \
+    -s $HOME/TI_CodeStyle.xml \
+    -r $(pwd)
