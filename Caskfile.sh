@@ -24,3 +24,4 @@ brew cask install lighttable
 brew cask install xquartz
 
 brew cask install font-fira-code
+brew cask install font-meslo-for-powerline

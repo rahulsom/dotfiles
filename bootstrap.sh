@@ -20,6 +20,9 @@ function doIt() {
 	if [ ! -e ~/.gitconfig-user ]; then
 		cp .gitconfig-user ~
 	fi
+	if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]; then
+		git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+	fi
 
 	source ~/.bash_profile;
 }
