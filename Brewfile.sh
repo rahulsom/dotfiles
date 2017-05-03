@@ -32,5 +32,12 @@ brew install rbenv
 brew install ruby-build
 brew install pyenv
 
+brew tap neovim/neovim
+brew install neovim
+sudo gem install neovim
+sudo pip3 install neovim
+sudo easy_install pip
+pip install --user neovim
+
 
 brew cleanup

@@ -44,6 +44,9 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# Always use nvim when asked for vi
+alias vi='nvim'
+
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
