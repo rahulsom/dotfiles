@@ -172,3 +172,4 @@ alias wifi='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Curr
 alias ad='asciidoctor -r asciidoctor-diagram'
 
 alias gig='groovy -Dgroovy.grape.report.downloads=true -Divy.message.logger.level=4'
+alias plistbuddy='/usr/libexec/PlistBuddy'
