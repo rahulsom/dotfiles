@@ -96,6 +96,7 @@ alias elasticsearch='docker run --rm --name elasticsearch -p 9200:9200 -p 9300:9
 alias zookeeper='docker run --name some-zookeeper --restart always -d -p 2181:2181 -p 2888:2888 -p 3888:3888 zookeeper'
 alias ihaskell='docker run --rm -v $(pwd):/notebooks -p 8888:8888 gibiansky/ihaskell'
 alias igroovy='docker run --rm -v $(pwd):/home/jovyan/work -p 8888:8888 rahulsom/igroovy'
+alias ijulia='docker run --rm -p 8888:8888 -v $PWD:/data auchida/ijulia'
 
 ## Compilers
 alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.17'
