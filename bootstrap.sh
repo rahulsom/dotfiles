@@ -15,10 +15,12 @@ function doIt() {
 		--exclude "README.md" \
 		--exclude "LICENSE-MIT.txt" \
 		--exclude ".gitconfig-user" \
+        --exclude ".idea" \
 		-avh --no-perms . ~;
 
 	if [ ! -e ~/.gitconfig-user ]; then
 		cp .gitconfig-user ~
+        echo "Please check ~/.gitconfig-user for correctness. You might not be @rahulsom"
 	fi
 	if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]; then
 		git clone https://github.com/bhilburn/powerlevel9k.git \
