@@ -39,6 +39,7 @@ alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
 alias pserve='docker run -it --rm -p 7777:80 andersrye/parsey-mcparseface-server'
 alias rasa='docker run -p 5000:5000 rasa/rasa_nlu_full start'
 alias tflow='docker run --rm -v $(pwd):/local -it -w /local -e TF_CPP_MIN_LOG_LEVEL=2 gcr.io/tensorflow/tensorflow:latest-devel python'
+alias anaconda='docker run -i -t continuumio/anaconda /bin/bash'
 
 # Parsing documents
 alias tika='docker run --rm -v $(pwd):/local -it rahulsom/tika'
@@ -101,6 +102,7 @@ alias zookeeper='docker run --name some-zookeeper --restart always -d -p 2181:21
 alias ihaskell='docker run --rm -v $(pwd):/notebooks -p 8888:8888 gibiansky/ihaskell'
 alias igroovy='docker run --rm -v $(pwd):/home/jovyan/work -p 8888:8888 rahulsom/igroovy'
 alias ijulia='docker run --rm -p 8888:8888 -v $PWD:/data auchida/ijulia'
+alias sonarqube='docker run --rm -p 9000:9000 -p 9092:9092 sonarqube:alpine'
 
 ## Compilers
 alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.17'
