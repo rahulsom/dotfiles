@@ -47,6 +47,9 @@ alias egrep='egrep --color=auto'
 # Always use nvim when asked for vi
 alias vi='nvim'
 
+# Short code for ./gradlew
+alias gw='./gradlew'
+
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
