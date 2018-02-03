@@ -48,8 +48,8 @@ alias tika='docker run --rm -v $(pwd):/local -it rahulsom/tika'
 alias che='docker run --rm -t -v /var/run/docker.sock:/var/run/docker.sock eclipse/che start'
 
 ## Databases
-alias postgres='docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres'
-alias pgsql='docker run --rm -it -e PGPASSWORD=mysecretpassword --link postgres:postgres postgres psql -h postgres -U postgres'
+alias postgres='docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:alpine'
+alias pgsql='docker run --rm -it -e PGPASSWORD=mysecretpassword --link postgres:postgres postgres:alpine psql -h postgres -U postgres'
 
 alias mysqld='docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql'
 function mysql() {
@@ -57,8 +57,8 @@ function mysql() {
         'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
 }
 
-alias redis='docker run --name redis -d -p 6379:6379 redis'
-alias redis-cli='docker run -it --link redis:redis --rm redis redis-cli -h redis -p 6379'
+alias redis='docker run --name redis -d -p 6379:6379 redis:alpine'
+alias redis-cli='docker run -it --link redis:redis --rm redis:alpine redis-cli -h redis -p 6379'
 
 alias cassandra='docker run --name cassandra -d -p 9042:9042 cassandra'
 function cqlsh() {
@@ -97,7 +97,7 @@ alias jenkins='docker run --rm -p 8080:8080 -p 50000:50000 -v $(pwd):/var/jenkin
 alias nexus='docker run --rm -p 8081:8081 -v $(pwd):/nexus-data sonatype/docker-nexus3'
 alias artifactoryoss='docker run --rm -v $(pwd)/data:/var/opt/jfrog/artifactory/data -v $(pwd)/logs:/var/opt/jfrog/artifactory/logs -v $(pwd)/etc:/var/opt/jfrog/artifactory/etc -p 8081:8081 docker.bintray.io/jfrog/artifactory-oss:latest'
 alias artifactoryregistry='docker run --rm -v $(pwd)/data:/var/opt/jfrog/artifactory/data -v $(pwd)/logs:/var/opt/jfrog/artifactory/logs -v $(pwd)/etc:/var/opt/jfrog/artifactory/etc -p 80:80 -p 8081:8081 docker.bintray.io/jfrog/artifactory-registry:latest'
-alias elasticsearch='docker run --rm --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch'
+alias elasticsearch='docker run --rm --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:alpine'
 alias zookeeper='docker run --name some-zookeeper --restart always -d -p 2181:2181 -p 2888:2888 -p 3888:3888 zookeeper'
 alias ihaskell='docker run --rm -v $(pwd):/notebooks -p 8888:8888 gibiansky/ihaskell'
 alias igroovy='docker run --rm -v $(pwd):/home/jovyan/work -p 8888:8888 rahulsom/igroovy'
