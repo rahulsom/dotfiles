@@ -86,6 +86,9 @@ alias asciidoctor='docker run -it -v $(pwd):/documents/ asciidoctor/docker-ascii
 alias http='docker run -ti --rm alpine/httpie'
 alias telnet='docker run -it mikesplain/telnet'
 alias dot='docker run -v $(pwd):/graphviz markfletcher/graphviz dot'
+httpstat() {
+  docker run -it --rm ondrejmo/httpstat "$@"
+}
 hostess() { docker run -it --rm -v /private/etc/hosts:/etc/hosts ondrejmo/hostess "$@" }
 how2() { docker run -it --rm ondrejmo/how2 "$@" }
 udict() { docker run -it --rm ondrejmo/udict "$@" }
