@@ -85,6 +85,7 @@ alias careercup='docker run --rm -v $(pwd):/local rahulsom/careercup'
 alias asciidoctor='docker run -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor -r asciidoctor-diagram'
 alias http='docker run -ti --rm alpine/httpie'
 alias telnet='docker run -it mikesplain/telnet'
+alias dot='docker run -v $(pwd):/graphviz markfletcher/graphviz dot'
 hostess() { docker run -it --rm -v /private/etc/hosts:/etc/hosts ondrejmo/hostess "$@" }
 how2() { docker run -it --rm ondrejmo/how2 "$@" }
 udict() { docker run -it --rm ondrejmo/udict "$@" }

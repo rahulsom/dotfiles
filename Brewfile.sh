@@ -15,7 +15,6 @@ brew install git
 brew install git-lfs
 brew install gnupg
 brew install gnupg2
-brew install graphviz
 brew install httpstat
 brew install hub
 brew install imagemagick --with-webp
