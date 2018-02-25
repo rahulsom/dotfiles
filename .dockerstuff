@@ -83,6 +83,8 @@ alias pcat='docker run --rm -v $(pwd):/local rahulsom/pcat'
 alias irssi='docker run -it --rm -e TERM -u $(id -u):$(id -g) --log-driver=none -v $HOME/.irssi:/home/user/.irssi:ro irssi:alpine'
 alias careercup='docker run --rm -v $(pwd):/local rahulsom/careercup'
 alias asciidoctor='docker run -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor -r asciidoctor-diagram'
+alias http='docker run -ti --rm alpine/httpie'
+alias telnet='docker run -it mikesplain/telnet'
 hostess() { docker run -it --rm -v /private/etc/hosts:/etc/hosts ondrejmo/hostess "$@" }
 how2() { docker run -it --rm ondrejmo/how2 "$@" }
 udict() { docker run -it --rm ondrejmo/udict "$@" }
