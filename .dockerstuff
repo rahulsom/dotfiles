@@ -37,7 +37,7 @@ alias watchtower='docker run -d --restart always --name watchtower -v /var/run/d
 # Machine Learning
 alias parsey='docker run --rm -i brianlow/syntaxnet 2>/dev/null'
 alias pserve='docker run -it --rm -p 7777:80 andersrye/parsey-mcparseface-server'
-alias rasa='docker run -p 5000:5000 rasa/rasa_nlu_full start'
+alias rasa='docker run -p 5000:5000 -v $(pwd):/app/projects rasa/rasa_nlu:latest-full start --path /app'
 alias tflow='docker run --rm -v $(pwd):/local -it -w /local -e TF_CPP_MIN_LOG_LEVEL=2 gcr.io/tensorflow/tensorflow:latest-devel python'
 alias anaconda='docker run -i -t continuumio/anaconda /bin/bash'
 
@@ -83,7 +83,8 @@ alias pcat='docker run --rm -v $(pwd):/local rahulsom/pcat'
 alias irssi='docker run -it --rm -e TERM -u $(id -u):$(id -g) --log-driver=none -v $HOME/.irssi:/home/user/.irssi:ro irssi:alpine'
 alias careercup='docker run --rm -v $(pwd):/local rahulsom/careercup'
 alias asciidoctor='docker run -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor -r asciidoctor-diagram'
-alias http='docker run -ti --rm alpine/httpie'
+# This is not very helpful for hitting localhost
+# alias http='docker run -ti --rm alpine/httpie'
 alias telnet='docker run -it mikesplain/telnet'
 alias dot='docker run -v $(pwd):/graphviz markfletcher/graphviz dot'
 alias ack='docker run -it -v $(pwd):/data rahulsom/ack'
