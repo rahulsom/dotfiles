@@ -47,7 +47,14 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(docker   git github git-flow   osx themes   grails mvn gradle   brew brew-cask   httpie kubectl vagrant zsh-autosuggestions)
+plugins=(
+	docker
+	git github git-flow
+	osx themes
+	grails mvn gradle
+	brew brew-cask
+	httpie kubectl vagrant zsh-autosuggestions
+	)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,9 +90,12 @@ export EDITOR=nvim
 alias chrome="open -a /Applications/Google\ Chrome.app"
 alias git >/dev/null && unalias git
 
-for file in ~/.{path,exports,aliases,functions,extra,dockerstuff}; do
+for file in ~/.{path,extra}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
+for file in ~/.zshrc.d/**; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done
 unset file;
 
 # User configuration
