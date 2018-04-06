@@ -30,12 +30,8 @@ function bb() {
 function _bb() {
   case $CURRENT in
     2)
-      if [ ! -e ~/.bb/projects.json ]; then
-        bb refresh
-      fi
-      if test $(find "~/.bb/projects.json" -mmin +5); then
-        bb refresh
-      fi
+      test -e ~/.bb/projects.json || bb refresh
+      test $(find "~/.bb/projects.json" -mmin +5 2>/dev/null) && bb refresh
       # local -a commands projects
       # commands=('refresh:refresh list of projects' 'tree:print tree of cloned projects')
       # projects=($(cat ~/.bb/projects.json| jq '.values[]  | .key + ":" + .description' | sed -e "s/'/\\'/g" | sed -e "s/\"/'/g"))

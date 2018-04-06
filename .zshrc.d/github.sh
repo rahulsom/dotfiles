@@ -6,6 +6,8 @@ function gh() {
     local count=1
     local page=1
     echo -n "" > ~/.gh_repos
+    echo "refresh" >> ~/.gh_repos
+    echo "tree" >> ~/.gh_repos
     while (( count > 0 )); do
       echo -n "\r$(wc -l ~/.gh_repos | tr -s " " | cut -d " " -f 2) Repos and counting...                    "
       curl -s "https://api.github.com/user/repos?per_page=100&page=$page" \
@@ -39,12 +41,8 @@ function gh() {
 function _gh() {
   case $CURRENT in
     2)
-      if [ ! -e ~/.gh_repos ]; then
-        gh refresh
-      fi
-      if test $(find "~/.gh_repos" -mmin +5); then
-        gh refresh
-      fi
+      test -e ~/.gh_repos || gh refresh
+      test $(find "~/.gh_repos" -mmin +5 2>/dev/null) && gh refresh
       compadd -- $(cat ~/.gh_repos) ;;
   esac
 }
