@@ -5,6 +5,11 @@ cd "$(dirname "${BASH_SOURCE}")";
 git pull origin master;
 
 function doIt() {
+
+	if [ ! -d ~/.sdkman ]; then
+		curl -s "https://get.sdkman.io" | bash
+	fi
+
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
 		--exclude ".osx" \
