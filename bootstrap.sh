@@ -30,6 +30,9 @@ function doIt() {
 		git clone git://github.com/zsh-users/zsh-autosuggestions \
 				~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 	fi
+	if [ ! -d ~/.config/nvim/bundle/Vundle.vim ]; then
+		git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
+	fi
 
 	source ~/.bash_profile;
 }
