@@ -2,8 +2,11 @@
 alias bbcurl="curl -H \"X-Auth-Token: $BB_TOKEN\" -H \"X-Auth-User: $BB_USER\""
 function bb() {
   if [ "$1" = "refresh" ]; then
-    mkdir -p ~/.bb
-    bbcurl -s "$BB_HOME/projects?limit=1000" | jq -r '.values[]  | .key'
+    if [ "$2" = "" ]; then
+	  bbcurl -s "$BB_HOME/projects?limit=1000" | jq -r '.values[]  | .key'
+    else
+      bbcurl -s "$BB_HOME/projects/$2/repos?limit=1000" | jq -r ".values[].slug"
+    fi
   elif [ "$1" = "tree" ]; then
     tree -L 2 ~/src/bb
   else
@@ -37,7 +40,10 @@ function _bb() {
       # _describe commands -- projects
       compadd -- $(cat $(cache getfile bb_projects)) tree
       ;;
-    3) compadd -- $(bbcurl -s "$BB_HOME/projects/$words[2]/repos?limit=1000" | jq -r ".values[].slug") ;;
+    3)
+      local PROJECT=${words[2]}
+      cache validate 10080 bb/$PROJECT || bb refresh $PROJECT > $(cache getfile bb/$PROJECT)
+      compadd -- $(cat $(cache getfile bb/$PROJECT)) ;;
   esac
 }
 

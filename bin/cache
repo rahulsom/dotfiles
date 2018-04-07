@@ -7,11 +7,13 @@ validate() {
 	test $(find "$HOME/.dotcache/$2" -mmin -$1 2>/dev/null | wc -l) -eq 1
 }
 
-getfile() {
+getFile() {
+	local FILENAME="$HOME/.dotcache/$1"
+	mkdir -p $(dirname $FILENAME)
 	echo "$HOME/.dotcache/$1"
 }
 
-help() {
+cacheHelp() {
 	cat << EOF
 Ideal usage:
 	cache validate 60 mycache || curl http://example.org/foo > $(cache getfile mycache)
@@ -27,7 +29,8 @@ EOF
 
 case $1 in
 	validate) validate $2 $3 ;;
-	getfile) getfile $2 ;;
+	getfile) getFile $2 ;;
 	clear) rm -rf ~/.dotcache/* ;;
-	*) help ;;
+	tree) tree ~/.dotcache ;;
+	*) cacheHelp ;;
 esac
