@@ -14,18 +14,18 @@ function doIt() {
 		--exclude ".DS_Store" \
 		--exclude ".osx" \
 		--exclude "bootstrap.sh" \
-        --exclude "Gemfile.sh" \
-        --exclude "Brewfile.sh" \
-        --exclude "Caskfile.sh" \
+		--exclude "Gemfile.sh" \
+		--exclude "Brewfile.sh" \
+		--exclude "Caskfile.sh" \
 		--exclude "README.md" \
 		--exclude "LICENSE-MIT.txt" \
 		--exclude ".gitconfig-user" \
-        --exclude ".idea" \
+		--exclude ".idea" \
 		-avh --no-perms . ~;
 
 	if [ ! -e ~/.gitconfig-user ]; then
 		cp .gitconfig-user ~
-        echo "Please check ~/.gitconfig-user for correctness. You might not be @rahulsom"
+		echo "Please check ~/.gitconfig-user for correctness. You might not be @rahulsom"
 	fi
 	if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]; then
 		git clone https://github.com/bhilburn/powerlevel9k.git \
