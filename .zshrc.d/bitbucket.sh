@@ -3,7 +3,7 @@ alias bbcurl="curl -H \"X-Auth-Token: $BB_TOKEN\" -H \"X-Auth-User: $BB_USER\""
 function bb() {
   if [ "$1" = "refresh" ]; then
     mkdir -p ~/.bb
-    bbcurl -s "$BB_HOME/projects?limit=1000" > ~/.bb/projects.json
+    bbcurl -s "$BB_HOME/projects?limit=1000" | jq -r '.values[]  | .key'
   elif [ "$1" = "tree" ]; then
     tree -L 2 ~/src/bb
   else
@@ -29,18 +29,15 @@ function bb() {
 function _bb() {
   case $CURRENT in
     2)
-      test -e ~/.bb/projects.json || bb refresh
-      test $(find "~/.bb/projects.json" -mmin +5 2>/dev/null) && bb refresh
+      cache validate 10080 bb_projects || bb refresh > $(cache getfile bb_projects)
       # local -a commands projects
       # commands=('refresh:refresh list of projects' 'tree:print tree of cloned projects')
       # projects=($(cat ~/.bb/projects.json| jq '.values[]  | .key + ":" + .description' | sed -e "s/'/\\'/g" | sed -e "s/\"/'/g"))
       # echo $projects
       # _describe commands -- projects
-      compadd -- $(cat ~/.bb/projects.json| jq -r '.values[]  | .key') refresh tree
+      compadd -- $(cat $(cache getfile bb_projects)) tree
       ;;
-    3) compadd -- $(curl -H "X-Auth-Token: $BB_TOKEN" \
-          -H "X-Auth-User: $BB_USER" \
-          -s "$BB_HOME/projects/$words[2]/repos?limit=1000" | jq -r ".values[].slug") ;;
+    3) compadd -- $(bbcurl -s "$BB_HOME/projects/$words[2]/repos?limit=1000" | jq -r ".values[].slug") ;;
   esac
 }
 

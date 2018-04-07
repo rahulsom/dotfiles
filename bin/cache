@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+mkdir -p $HOME/.dotcache/
+
+## cache validate 5 file
+validate() {
+	test -r "$HOME/.dotcache/$2"
+	test $(find "$HOME/.dotcache/$2" -mmin -$1 2>/dev/null | wc -l) -eq 1
+}
+
+getfile() {
+	echo "$HOME/.dotcache/$1"
+}
+
+help() {
+	cat << EOF
+Ideal usage:
+	cache validate 60 mycache || curl http://example.org/foo > $(cache getfile mycache)
+Usage:
+	cache validate MINUTES FILE
+	cat content > $(cache getfile FILE)
+Example:
+	cache validate 60 ghrepos # 1 hour
+	cache validate 1440 ghrepos # 1 day
+	cache validate 10080 ghrepos # 1 week
+EOF
+}
+
+case $1 in
+	validate) validate $2 $3 ;;
+	getfile) getfile $2 ;;
+	clear) rm -rf ~/.dotcache/* ;;
+	*) help ;;
+esac

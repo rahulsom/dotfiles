@@ -15,8 +15,12 @@ brew install git
 brew install git-lfs
 brew install gnupg
 brew install gnupg2
+brew install go
+brew install httpie
 brew install hub
+brew install ievms
 brew install imagemagick --with-webp
+brew install jq
 brew install tree
 brew install wget
 brew install mas
