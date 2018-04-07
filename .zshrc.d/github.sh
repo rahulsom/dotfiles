@@ -1,4 +1,5 @@
 #!/bin/zsh
+alias ghcurl="curl -H \"Authorization: Bearer $GH_TOKEN\""
 function gh() {
 
   if [ "$1" = "refresh" ]; then
@@ -10,8 +11,8 @@ function gh() {
     echo "tree" >> ~/.gh_repos
     while (( count > 0 )); do
       echo -n "\r$(wc -l ~/.gh_repos | tr -s " " | cut -d " " -f 2) Repos and counting...                    "
-      curl -s "https://api.github.com/user/repos?per_page=100&page=$page" \
-          -H "Authorization: Bearer $GH_TOKEN" | jq -r ".[].full_name" > /tmp/gh.txt
+      ghcurl -s "https://api.github.com/user/repos?per_page=100&page=$page" \
+          | jq -r ".[].full_name" > /tmp/gh.txt
       count=$(wc -l /tmp/gh.txt | tr -s " " | cut -d " " -f 2)
       cat /tmp/gh.txt >> ~/.gh_repos
       rm /tmp/gh.txt

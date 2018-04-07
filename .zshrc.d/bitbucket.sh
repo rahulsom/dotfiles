@@ -1,10 +1,9 @@
 #!/bin/zsh
+alias bbcurl="curl -H \"X-Auth-Token: $BB_TOKEN\" -H \"X-Auth-User: $BB_USER\""
 function bb() {
   if [ "$1" = "refresh" ]; then
     mkdir -p ~/.bb
-    curl -H "X-Auth-Token: $BB_TOKEN" \
-        -H "X-Auth-User: $BB_USER" \
-        -s "$BB_HOME/projects?limit=1000" > ~/.bb/projects.json
+    bbcurl -s "$BB_HOME/projects?limit=1000" > ~/.bb/projects.json
   elif [ "$1" = "tree" ]; then
     tree -L 2 ~/src/bb
   else
