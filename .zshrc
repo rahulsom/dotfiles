@@ -52,7 +52,6 @@ plugins=(
 	git github git-flow
 	osx themes
 	grails mvn gradle
-	brew brew-cask
 	httpie kubectl vagrant zsh-autosuggestions
 	)
 
