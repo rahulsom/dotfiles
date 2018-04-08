@@ -28,10 +28,13 @@ function gh() {
   elif [ "$1" = "tree" ]; then
     tree -L 2 ~/src/gh
   else
-    local REPO=$1
-    if [ "$1" = "" ]; then
+    local REPO=$2
+    if [ "$2" = "" ]; then
       echo "Need REPO."
     else
+      if [ "$3" != "" ]; then
+        REPO=$2/$3
+      fi
       if [ -d ~/src/gh/$REPO ]; then
         cd ~/src/gh/$REPO
       else
