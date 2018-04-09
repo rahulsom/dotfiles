@@ -99,7 +99,7 @@ unset file;
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin
+export PATH=/usr/local/anaconda3/bin:$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR='1;35;40'
 

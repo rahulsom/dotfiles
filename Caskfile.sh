@@ -6,6 +6,7 @@ brew tap caskroom/fonts
 brew tap caskroom/versions
 
 # brew cask install dropbox 2> /dev/null
+brew cask install anaconda
 brew cask install google-chrome
 brew cask install atom
 brew cask install virtualbox
