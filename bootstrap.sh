@@ -6,6 +6,12 @@ git pull origin master;
 
 function doIt() {
 
+	if [ ! -d ~/.oh-my-zsh ]; then
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	fi
+
+	test -x /usr/local/bin/brew || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
 	if [ ! -d ~/.sdkman ]; then
 		curl -s "https://get.sdkman.io" | bash
 	fi
