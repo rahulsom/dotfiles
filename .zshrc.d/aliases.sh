@@ -179,3 +179,4 @@ alias plistbuddy='/usr/libexec/PlistBuddy'
 
 alias envsubst=$(find /usr/local/Cellar/gettext -name envsubst)
 alias shortjson='groovy https://gist.githubusercontent.com/rahulsom/200a4c7c336cf895718a05e7b13916d4/raw/ShortJson.groovy'
+alias json2gclass='groovy https://gist.githubusercontent.com/rahulsom/afa34f0f08c4ab7ac52f59974148b948/raw/json2gclass.groovy'
