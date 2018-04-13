@@ -112,6 +112,8 @@ alias ihaskell='docker run --rm -v $(pwd):/notebooks -p 8888:8888 gibiansky/ihas
 alias igroovy='docker run --rm -v $(pwd):/home/jovyan/work -p 8888:8888 rahulsom/igroovy'
 alias ijulia='docker run --rm -p 8888:8888 -v $PWD:/data auchida/ijulia'
 alias sonarqube='docker run --rm -p 9000:9000 -p 9092:9092 sonarqube:alpine'
+alias smtpstart='docker run --rm -p 25:25 --name smtpserver -d namshi/smtp'
+alias smtpstop='docker kill smtpserver'
 
 ## Compilers
 alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.17'
