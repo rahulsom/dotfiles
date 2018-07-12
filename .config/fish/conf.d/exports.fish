@@ -29,9 +29,6 @@ set -x -g LESS_TERMCAP_md "$yellow";
 # Don’t clear the screen after quitting a manual page
 set -x -g MANPAGER "less -X";
 
-# Always enable colored `grep` output
-set -x -g GREP_OPTIONS "--color auto";
-
 # Link Homebrew casks in `/Applications` rather than `~/Applications`
 set -x -g HOMEBREW_CASK_OPTS "--appdir /Applications";
 
