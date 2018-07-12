@@ -34,16 +34,16 @@ alias l="ls -lF $colorflag"
 alias la="ls -laF $colorflag"
 
 # List only directories
-# alias lsd="ls -lF $colorflag | grep --color=never '^d'"
+alias lsd="ls -lF $colorflag | grep --color=never '^d'"
 
 # Always use color output for `ls`
 alias ls="command ls $colorflag"
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-# alias grep='grep --color=auto'
-# alias fgrep='fgrep --color=auto'
-# alias egrep='egrep --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 # Always use nvim when asked for vi
 alias vi='nvim'
@@ -63,7 +63,7 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
-# alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache ;and killall -HUP mDNSResponder"
@@ -150,7 +150,7 @@ alias pumpitup="osascript -e 'set volume output volume 100'"
 
 # Kill all the tabs in Chrome to free up memory
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
-# alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
@@ -165,7 +165,7 @@ alias path='echo -e $PATH\n'
 #command -v npm > /dev/null ;and alias npme="npm --registry http://registry.npmjs.eu/"
 
 # Open in Intellij
-# alias idea='ls /Applications/ | grep .app$ | grep "IntelliJ" | sed -e "s/\.app//g"'
+# alias idea='ls /Applications/ | grep .app\$ | grep "IntelliJ" | sed -e "s/\.app//g"'
 
 # Create a new slidedeck using lazybones+asciidoctor+revealjs+gradle
 alias slidedeck='lazybones create asciidoctor-revealjs'
@@ -191,7 +191,7 @@ alias gau='git add --update'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gbd='git branch -d'
-# alias gbda='git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
+alias gbda='git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*\$)" | command xargs -n 1 git branch -d'
 alias gbl='git blame -b -w'
 alias gbnm='git branch --no-merged'
 alias gbr='git branch --remote'
