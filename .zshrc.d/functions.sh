@@ -340,3 +340,27 @@ function restart_audio() {
 function whichwifi() {
   /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}'
 }
+
+function gwdi() {
+	if [ "$1" = "" ]; then
+		cat << EOF
+gwdi - gradlew dependency insight
+
+Usage:
+gwdi <dependency> [configuration [subproject]]
+
+Example:
+gwdi reactive-streams
+gwdi reactive-streams compileClasspath
+gwdi reactive-streams compileClasspath grooves-java
+
+EOF
+	elif [ "$2" = "" ]; then
+		./gradlew dependencyInsight --dependency $1
+	elif [ "$3" = "" ]; then
+		./gradlew dependencyInsight --dependency $1 --configuration $2
+	else
+		./gradlew :$3:dependencyInsight --dependency $1 --configuration $2
+	fi
+
+}
