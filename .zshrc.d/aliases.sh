@@ -177,6 +177,6 @@ alias ad='asciidoctor -r asciidoctor-diagram'
 alias gig='groovy -Dgroovy.grape.report.downloads=true -Divy.message.logger.level=4'
 alias plistbuddy='/usr/libexec/PlistBuddy'
 
-alias envsubst=$(find /usr/local/Cellar/gettext -name envsubst)
+alias envsubst=$(find /usr/local/Cellar/gettext -name envsubst | head -1)
 alias shortjson='groovy https://gist.githubusercontent.com/rahulsom/200a4c7c336cf895718a05e7b13916d4/raw/ShortJson.groovy'
 alias json2gclass='groovy https://gist.githubusercontent.com/rahulsom/afa34f0f08c4ab7ac52f59974148b948/raw/json2gclass.groovy'
