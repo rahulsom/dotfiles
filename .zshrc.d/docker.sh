@@ -116,7 +116,7 @@ alias smtpstart='docker run --rm -p 25:25 --name smtpserver -d namshi/smtp'
 alias smtpstop='docker kill smtpserver'
 
 ## Compilers
-alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.18'
+alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.19'
 
 function letsencrypt() {
     docker run -it --rm \
