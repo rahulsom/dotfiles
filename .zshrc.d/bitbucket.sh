@@ -48,3 +48,7 @@ function _bb() {
 }
 
 compdef _bb bb
+
+function bbpr() {
+  git config --add remote.origin.fetch '+refs/pull-requests/*/from:refs/remotes/origin/pr/*'
+}
