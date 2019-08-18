@@ -34,8 +34,8 @@ function doIt() {
 		echo "Please check ~/.gitconfig-user for correctness. You might not be @rahulsom"
 	fi
 	if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]; then
-		git clone https://github.com/bhilburn/powerlevel9k.git \
-				~/.oh-my-zsh/custom/themes/powerlevel9k
+		git clone https://github.com/romkatv/powerlevel10k.git \
+				~/.oh-my-zsh/custom/themes/powerlevel10k
 	fi
 	if [ ! -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
 		git clone git://github.com/zsh-users/zsh-autosuggestions \
