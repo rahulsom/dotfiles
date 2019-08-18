@@ -9,6 +9,29 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
+zsh_sdk_java_version() {
+    echo "$(sdk c java | xargs -n 1 echo | tail -1) ☕"
+}
+POWERLEVEL9K_CUSTOM_SDK_JAVA_VERSION="zsh_sdk_java_version"
+POWERLEVEL9K_CUSTOM_SDK_JAVA_VERSION_BACKGROUND="red"
+POWERLEVEL9K_CUSTOM_SDK_JAVA_VERSION_FOREGROUND="white"
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    context
+    dir
+    vcs
+    dir_writable
+)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    status
+    command_execution_time
+    root_indicator
+    background_jobs
+    history
+    time
+    custom_sdk_java_version
+)
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
